@@ -13,6 +13,7 @@ export type Config = {
 }
 const defaultCfg: Required<Config> = { zIndex: 1, hiddenZIndex: -1, opacity: 0.7 }
 
+/** Opacity-based, controlled modal (always mounted) */
 export function useModal(config?: Config): Hook {
   const { zIndex, hiddenZIndex, opacity } = {...defaultCfg, ...config}
 
