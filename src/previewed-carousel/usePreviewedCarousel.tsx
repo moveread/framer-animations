@@ -1,15 +1,11 @@
 import React, { useState } from "react"
-import PreviewedCarousel, { PreviewConfig } from "./PreviewedCarousel"
+import PreviewedCarousel, { CurrentConfig, PreviewConfig } from "./PreviewedCarousel"
 import { SwipeDirection } from "../util/swipe"
 import { mod } from "../util/mod"
 
-export type Items = {
-  mode: 'eager'
-  items: JSX.Element[]
-} | {
-  mode?: 'lazy'
-  numItems: number
-  item(idx: number): JSX.Element
+export type ItemProps = {
+  idx: number
+  selected?: boolean
 }
 export type Hook = {
   carousel: JSX.Element
@@ -18,31 +14,33 @@ export type Hook = {
 }
 export type Config = {
   preview?: PreviewConfig
+  current?: CurrentConfig
   swipeThreshold?: number
 }
 
-export function usePreviewedCarousel(items: Items, config?: Config): Hook {
+export function usePreviewedCarousel(
+  item: (props: ItemProps) => JSX.Element,
+  numItems: number, config?: Config
+): Hook {
 
-  const numItems = items.mode === 'eager'
-    ? items.items.length
-    : items.numItems
-  const item = items.mode === 'eager'
-    ? (idx: number) => items.items[idx]
-    : items.item
+  const [page, setPage] = useState(1)
+  const idx = mod(page, numItems)
+  const next = (i: number, m = numItems) => mod(i + 1, m)
+  const prev = (i: number, m = numItems) => mod(i - 1, m)
 
-  const [idx, setIdx] = useState(1)
-  const next = (i: number) => mod(i + 1, numItems)
-  const prev = (i: number) => mod(i - 1, numItems)
+  const m = numItems < 2 ? 4*numItems
+          : numItems < 3 ? 2*numItems
+          : numItems
 
   function move(dir: SwipeDirection) {
-    setIdx(dir === 'left' ? next : prev)
+    setPage(i => dir === 'left' ? i+1 : i-1)
   }
 
   const carousel = (
     <PreviewedCarousel
-      prev={{ elem: item(prev(idx)), key: prev(idx) }}
-      curr={{ elem: item(idx), key: idx }}
-      next={{ elem: item(next(idx)), key: next(idx) }}
+      prev={{ elem: item({ idx: prev(idx) }), key: mod(page-1, m) }}
+      curr={{ elem: item({ idx, selected: true }), key: mod(page, m) }}
+      next={{ elem: item({ idx: next(idx)} ), key: mod(page+1, m) }}
       move={move} {...config}
     />
   )
