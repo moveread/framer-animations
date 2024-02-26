@@ -8,19 +8,20 @@ export type Hook = {
 
 export type Config = {
   zIndex?: number
+  hiddenZIndex?: number
   opacity?: number
 }
-const defaultCfg: Required<Config> = { zIndex: 1, opacity: 0.7 }
+const defaultCfg: Required<Config> = { zIndex: 1, hiddenZIndex: -1, opacity: 0.7 }
 
 export function useModal(config?: Config): Hook {
-  const { zIndex, opacity } = {...defaultCfg, ...config}
+  const { zIndex, hiddenZIndex, opacity } = {...defaultCfg, ...config}
 
   const controls = useAnimation()
 
   const variants: Record<string, Variant> = {
     hide: {
       opacity: 0,
-      zIndex: 0
+      zIndex: hiddenZIndex
     },
     show: {
       opacity, zIndex
@@ -36,7 +37,7 @@ export function useModal(config?: Config): Hook {
     <motion.div initial='hide' animate={controls} variants={variants} style={{
       position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
       background: '#444', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      ...style, zIndex
+      ...style
     }} {...props} />
   ))
 
