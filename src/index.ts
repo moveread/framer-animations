@@ -1,6 +1,6 @@
 export { useLoader } from './loader'
-export { useModal } from './modal'
 export { useSwipeAnimation } from './swipe'
 export { Slideshow } from './Slideshow'
 export { useCarousel, Carousel } from './carousel'
 export { usePreviewedCarousel, PreviewedCarousel } from './previewed-carousel'
+export { useModal, Modal } from './modal' 
