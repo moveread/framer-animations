@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "./Carousel";
-import type { SwipeDirection } from "./direction";
+import { SwipeDirection } from "../util/swipe";
+import { mod } from "../util/mod";
 
-/** Always non-negative modulo */
-const mod = (n: number, m: number) => ((n % m) + m) % m
-
-export type Config = {
+export type Items = {
   mode: 'eager'
   items: JSX.Element[]
 } | {
@@ -19,11 +17,14 @@ export type Hook = {
   move(swipeDir: SwipeDirection): void
   goto(page: number): void
 }
+export type Config = {
+  swipeThreshold?: number
+}
 
 /**
  * Self-managed draggable carousel. Returns the actual component `carousel`, plus the `selected` item and callbacks to programatically move
  */
-export function useCarousel(config: Config): Hook {
+export function useCarousel(items: Items, config?: Config): Hook {
   const [state, setState] = useState<{page: number, dir?: SwipeDirection, skipAnimation?: boolean}>({ page: 0 })
   useEffect(() => console.log(state), [state])
   const {page, dir, skipAnimation} = state
@@ -40,15 +41,19 @@ export function useCarousel(config: Config): Hook {
     setState({ page: newPage, dir, skipAnimation })
   }
 
-  const numItems = config.mode === 'eager'
-    ? config.items.length
-    : config.numItems
-  const item = config.mode === 'eager'
-    ? (idx: number) => config.items[idx]
-    : config.item
+  const numItems = items.mode === 'eager'
+    ? items.items.length
+    : items.numItems
+  const item = items.mode === 'eager'
+    ? (idx: number) => items.items[idx]
+    : items.item
 
   const selected = mod(page, numItems);
-  const carousel = <Carousel page={page} direction={dir} skipAnimation={skipAnimation} move={move} item={item(selected)} />
+  const carousel = (
+    <Carousel page={page} direction={dir} skipAnimation={skipAnimation}
+      move={move} item={item(selected)} {...config}
+    />
+  )
 
   return { carousel, selected, move, goto }
 };

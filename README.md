@@ -76,7 +76,7 @@ return (
 
 ## Carousel
 
-> Fully controlled, swipable carousel
+> Fully controlled, swipable carousel with animation to skip multiple pages
 
 ![Carousel in action](media/carousel.gif)
 
@@ -104,3 +104,9 @@ return (
   </div>
 )
 ```
+
+## Previewed Carousel
+
+> Fully controlled, swipable carousel previewing the previous and next items
+
+![Carousel in action](media/previewed-carousel.gif)

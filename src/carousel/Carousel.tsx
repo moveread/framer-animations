@@ -1,11 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { SwipeDirection } from "./direction";
-
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
+import { SwipeDirection, swipePower } from "../util/swipe";
 
 type Variant = {
   dir: SwipeDirection
@@ -62,6 +57,7 @@ export type Props = {
   item: JSX.Element
   direction?: SwipeDirection
   skipAnimation?: boolean
+  swipeThreshold?: number
 }
 
 /** Controlled, unstyled Carousel
@@ -71,7 +67,7 @@ export type Props = {
  * - `direction`: animation direction when switching pages
  * - `skipAnimation`: whether to perform a 'skipping' animation when switching pages
  */
-export function Carousel({ move, direction, page, item, skipAnimation }: Props) {
+export function Carousel({ move, direction, page, item, skipAnimation, swipeThreshold }: Props) {
   return (
     (
       <div style={{ height: '100%', width: '100%', overflow: 'hidden', position: 'relative' }}>
@@ -87,10 +83,10 @@ export function Carousel({ move, direction, page, item, skipAnimation }: Props) 
             }}
             onDragEnd={(_, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
-              if (swipe < -swipeConfidenceThreshold) {
+              if (swipe < -(swipeThreshold ?? 1e4)) {
                 move('left')
               }
-              else if (swipe > swipeConfidenceThreshold)
+              else if (swipe > (swipeThreshold ?? 1e4))
                 move('right')
             }}
           >
