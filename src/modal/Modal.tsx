@@ -8,7 +8,7 @@ export type Props = MotionProps & {
 /** Prop-controlled presence-based modal */
 export function Modal({ show, children, opacity, style, ...motionProps }: Props) {
   return (
-    <AnimatePresence>
+    <AnimatePresence initial={false}>
       {show && (
         <motion.div
           initial={{ opacity: 0 }}

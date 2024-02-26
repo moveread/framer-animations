@@ -141,7 +141,10 @@ export function useLoader(config?: Config): Hook {
   }
 
   const loader = (
-    <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+    <div style={{
+        height: '100%', width: '100%', position: 'relative', display: 'flex',
+        alignItems: 'center', justifyContent: 'center', border: '1px solid red'
+    }}>
       <svg viewBox="0 0 100 100">
         <motion.circle
           variants={variants} initial='start' animate={controls}
