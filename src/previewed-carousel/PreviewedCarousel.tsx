@@ -14,6 +14,17 @@ export type PreviewConfig = {
   widthProportion?: number
   rotateY?: string
   transformPerspective?: number
+  zIndex?: number
+}
+export const defaultPreview: Required<PreviewConfig> = {
+  scale: 0.7, rotateY: '45deg', transformPerspective: 1000, widthProportion: 0.25, zIndex: 0
+}
+export type CurrentConfig = {
+  zIndex?: number
+  scale?: number
+}
+export const defaultCurr: Required<CurrentConfig> = {
+  scale: 1.2, zIndex: 1
 }
 type Props = {
   prev: Item
@@ -21,21 +32,21 @@ type Props = {
   next: Item
   move(direction: SwipeDirection): void
   preview?: PreviewConfig,
+  current?: CurrentConfig
   swipeThreshold?: number
 }
-export function PreviewedCarousel({ prev, curr, next, move, preview, swipeThreshold }: Props) {
+export function PreviewedCarousel({ prev, curr, next, move, swipeThreshold, ...config }: Props) {
 
-  const scale = preview?.scale ?? 0.7
-  const rotateY = preview?.rotateY ?? '15deg'
-  const transformPerspective = preview?.transformPerspective ?? 1000
-  const widthProportion = preview?.widthProportion ?? 0.25
+  const { scale, widthProportion, rotateY, transformPerspective, zIndex } = {...defaultPreview, ...config.preview}
+  const { scale: currScale, zIndex: currZ } = {...defaultCurr, ...config.current }
+  
 
   const variants: Record<State, Variant> = {
     enter: { opacity: 0, scale: 0 },
     exit: { opacity: 0, scale: 0 },
-    left: { opacity: 1, scale: preview?.scale ?? 0.7 },
-    center: { opacity: 1, scale: 1 },
-    right: { opacity: 1, scale },
+    left: { opacity: 1, scale, zIndex },
+    center: { opacity: 1, scale: currScale, zIndex: currZ },
+    right: { opacity: 1, scale, zIndex },
   }
 
   const common: MotionProps = {
