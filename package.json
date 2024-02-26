@@ -1,6 +1,6 @@
 {
     "name": "framer-animations",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "description": "Simple, programmatic `framer-motion` animations",
     "main": "dist/index.js",
     "scripts": {
