@@ -44,11 +44,11 @@ const defaultCfg: Required<Config> = {
 }
 
 // Inspired by https://jitter.video/file/?id=dAMdMIMhmM01LvguoXUkc
-export function useLoader(config: Config): Hook {
+export function useLoader(config?: Config): Hook {
 
   const { color, successIcon, failIcon,
     loadingArcProportion, startArcProportion, strokeWidth, period } = { ...defaultCfg, ...config }
-  const arcDuration = config.arcDuration ?? period / 2
+  const arcDuration = config?.arcDuration ?? period / 2
 
   const controls = useAnimation()
   const successControls = useAnimation()
