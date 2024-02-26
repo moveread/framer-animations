@@ -73,3 +73,34 @@ return (
   </Slideshow>
 )
 ```
+
+## Carousel
+
+> Fully controlled, swipable carousel
+
+![Carousel in action](media/carousel.gif)
+
+```jsx
+import { useCarousel } from 'framer-animations'
+
+const { carousel, goto, selected } = useCarousel({
+  numItems: 10, item: idx => <p>Item {idx}</p>
+})
+// or
+const { carousel, goto, selected } = useCarousel({
+  mode: 'eager': items: [
+    <p>Item 1</p>,
+    // ...
+    <p>Item N</p>
+  ]
+})
+
+return (
+  <div>
+    {carousel}
+    <button onClick={() => goto(0)}>Start</button>
+    <p>Page: {selected}</p>
+    <button onClick={() => goto(9)}>End</button>
+  </div>
+)
+```
