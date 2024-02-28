@@ -1,5 +1,5 @@
 alias pub := publish
 
 publish:
-	rm -dr dist
+	rm -dr dist || echo 'No previous dist'
 	yarn run build && yarn version patch && npm publish
