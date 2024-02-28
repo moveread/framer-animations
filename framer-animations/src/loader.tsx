@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useAnimation, motion, Variant, MotionProps } from "framer-motion"
 
 const variantKeys = ['start', 'loading', 'succeed', 'fail', 'out'] as const
@@ -107,15 +107,15 @@ export function useLoader(config?: Config): Hook {
     }
   }
 
-  async function start() {
+  const start = useCallback(async () => {
     controls.stop()
     await controls.start('start')
-  }
-  function load() {
+  }, [controls])
+  const load = useCallback(() => {
     controls.stop()
     controls.start('loading')
-  }
-  async function finish(result: 'succeed' | 'fail') {
+  }, [controls])
+  const finish = useCallback(async (result: 'succeed' | 'fail') => {
     const iconControls = result === 'succeed'
       ? successControls : failControls
     controls.stop()
@@ -128,12 +128,13 @@ export function useLoader(config?: Config): Hook {
       iconControls.start({ opacity: 0, scale: 0 }, { duration: 0.2 })
     ])
     controls.set('start')
-  }
+  }, [controls, failControls, successControls])
 
-  const animate: Hook['animate'] = (action) =>
+  const animate: Hook['animate'] = useCallback((action) =>
     action === 'stop' ? start() :
-      action === 'load' ? load() :
-        finish(action) as any
+    action === 'load' ? load() :
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    finish(action) as any, [finish, load, start])
 
   const iconStyle: MotionProps['style'] = {
     height: '100%', width: '100%', position: 'absolute', top: 0, left: 0,

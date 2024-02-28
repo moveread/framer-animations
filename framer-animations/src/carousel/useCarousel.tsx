@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Carousel } from "./Carousel";
 import { SwipeDirection } from "../util/swipe";
 import { mod } from "../util/mod";
@@ -29,17 +29,17 @@ export function useCarousel(items: Items, config?: Config): Hook {
   useEffect(() => console.log(state), [state])
   const {page, dir, skipAnimation} = state
 
-  function move(dir: SwipeDirection) {
+  const move = useCallback((dir: SwipeDirection) => {
     const delta = dir === 'left' ? 1 : -1
     setState(curr => ({ page: curr.page + delta, dir, skipAnimation: false }))
-  }
+  }, [setState])
   
-  function goto(newPage: number) {
+  const goto = useCallback((newPage: number) => {
     console.log('Goto', newPage)
     const dir = newPage > page ? 'left' : 'right'
     const skipAnimation = Math.abs(newPage - page) > 1
     setState({ page: newPage, dir, skipAnimation })
-  }
+  }, [page, setState])
 
   const numItems = items.mode === 'eager'
     ? items.items.length

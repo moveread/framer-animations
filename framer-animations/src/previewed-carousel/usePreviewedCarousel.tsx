@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useState } from "react"
 import PreviewedCarousel, { CurrentConfig, PreviewConfig } from "./PreviewedCarousel"
 import { SwipeDirection } from "../util/swipe"
 import { mod } from "../util/mod"
@@ -32,9 +32,9 @@ export function usePreviewedCarousel(
           : numItems < 3 ? 2*numItems
           : numItems
 
-  function move(dir: SwipeDirection) {
+  const move = useCallback((dir: SwipeDirection) => {
     setPage(i => dir === 'left' ? i+1 : i-1)
-  }
+  }, [setPage])
 
   const carousel = (
     <PreviewedCarousel

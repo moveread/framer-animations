@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
 import { MotionProps, motion, useAnimation } from 'framer-motion'
 
 export type Config = {
@@ -17,7 +17,7 @@ export function useSwipeAnimation({ swipeIcon, ...config}: Config): {
   const controls = useAnimation()
   const a = 10
 
-  function run() {
+  const run = useCallback(() => {
     controls.stop();
     return controls.start({
       rotate: [null, a, -a, 0],
@@ -26,7 +26,7 @@ export function useSwipeAnimation({ swipeIcon, ...config}: Config): {
     }, {
       duration: durationSecs
     })
-  }
+  }, [controls, durationSecs])
 
   const Animation = memo((props: Omit<MotionProps, 'children'>) => (
     <motion.div animate={controls} initial={{opacity: 0}} {...props}>

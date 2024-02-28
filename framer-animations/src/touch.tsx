@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useAnimation, motion, MotionProps } from 'framer-motion'
 import { delay } from './util/promises'
 import { Modal } from './modal'
@@ -26,7 +26,7 @@ export function useTouchAnimation(config?: Config) {
   const [modal, setModal] = useNotifiedState(false)
   const iconControls = useAnimation()
 
-  async function run(action: Action): Promise<void> {
+  const run = useCallback(async (action: Action): Promise<void> => {
     switch (action) {
       case 'show':
           return await setModal(true) // make sure the modal is mounted before continuing
@@ -40,13 +40,14 @@ export function useTouchAnimation(config?: Config) {
         return await iconControls.start({ scale })
       }
     }
-  }
-  async function animate(...actions: Action[]) {
+  }, [iconControls, setModal])
+
+  const animate = useCallback(async (...actions: Action[]) => {
     for (const a of actions) {
       await run(a)
       await delay(0)
     }
-  }
+  }, [run])
 
   const { transition, ...modalProps } = config?.modalProps ?? {}
   const { style, ...iconProps } = config?.iconProps ?? {}
