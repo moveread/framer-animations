@@ -5,7 +5,24 @@ export type Props = MotionProps & {
   show: boolean
   opacity?: number
 }
-/** Prop-controlled presence-based modal */
+/** Prop-controlled presence-based modal
+ * - Gets unmounted when `show` is false
+ * - To know when it finishes mounting, we recommend using `useNotifiedState`:
+ *
+ *    ```jsx
+ *    import { Modal, useNotifiedState } from 'framer-animations'
+ * 
+ *    const [show, setShow] = useNotifiedState(false)
+ * 
+ *    async function runComplexAnimationInsideModal() {
+ *      await setShow(true);
+ *      // now `<Modal>` is mounted
+ *      ...
+ *    }
+ *    ...
+ *    <Modal show={show}>...
+ *    ```
+ */
 export function Modal({ show, children, opacity, style, ...motionProps }: Props) {
   return (
     <AnimatePresence initial={false}>
