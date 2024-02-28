@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useAnimation, motion, MotionProps } from 'framer-motion'
 import { delay } from './util/promises'
 import { Modal } from './modal'
@@ -34,10 +34,11 @@ export function useTouchAnimation(config?: Config) {
           setModal(false) // we already assume the modal will be unmounted, so who cares
           return
       case 'press':
-      case 'lift':
+      case 'lift': {
         const scale = action === 'press' ? 0.7 : 1
         iconControls.stop()
         return await iconControls.start({ scale })
+      }
     }
   }
   async function animate(...actions: Action[]) {

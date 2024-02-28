@@ -32,7 +32,7 @@ export function useCarousel(items: Items, config?: Config): Hook {
   function move(dir: SwipeDirection) {
     const delta = dir === 'left' ? 1 : -1
     setState(curr => ({ page: curr.page + delta, dir, skipAnimation: false }))
-  };
+  }
   
   function goto(newPage: number) {
     console.log('Goto', newPage)
@@ -56,6 +56,6 @@ export function useCarousel(items: Items, config?: Config): Hook {
   )
 
   return { carousel, selected, move, goto }
-};
+}
 
 export default useCarousel
