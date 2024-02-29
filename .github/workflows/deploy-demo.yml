@@ -35,6 +35,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: ./demo/yarn.lock
       - name: Install dependencies
         run: yarn
         working-directory: ./demo
