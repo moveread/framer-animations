@@ -11,3 +11,4 @@ build-preview: build preview
 
 chakra:
   yarn add @chakra-ui/react @emotion/react @emotion/styled framer-motion
+
