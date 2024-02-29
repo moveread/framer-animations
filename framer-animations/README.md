@@ -2,6 +2,8 @@
 
 > Simple, programmatic `framer-motion` animations
 
+- Demos of some components/animations: https://moveread.github.io/framer-animations/
+
 ## Loader/spinner
 
 > Fully controlled loader/spinner
