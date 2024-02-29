@@ -1,5 +1,5 @@
 import React, { Key, ReactNode } from "react"
-import { AnimatePresence, type Variant, motion, Variants, Transition } from "framer-motion"
+import { AnimatePresence, type Variant, motion, Variants, Transition, MotionStyle } from "framer-motion"
 
 export const directions = ['up', 'down', 'left', 'right'] as const
 export type Direction = typeof directions[number]
@@ -28,14 +28,15 @@ type Props = {
   direction?: Direction
   /** `framer-motion` transition ([docs](https://www.framer.com/motion/transition/)). Default: `{ duration: 0.2 }` */
   transition?: Transition
+  style?: MotionStyle
 }
-export function Slideshow({ children, pageKey, direction, transition }: Props) {
+export function Slideshow({ children, pageKey, direction, transition, style }: Props) {
   const dir: Direction = direction ?? 'right'
   return (
     <AnimatePresence initial={false} custom={dir}>
       <motion.div key={pageKey} custom={dir} variants={variants}
         initial='enter' animate='center' exit='exit' transition={transition ?? {duration: 0.2}}
-        style={{ width: '100%', height: '100%', position: 'absolute' }}
+        style={{ width: '100%', height: '100%', position: 'absolute', ...style }}
       >
         {children}
       </motion.div>

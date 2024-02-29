@@ -1,18 +1,21 @@
-import React, { memo, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { MotionProps, motion, useAnimation } from 'framer-motion'
+import SwipeIcon, { Props as IconProps } from './util/icons/SwipeIcon';
 
-export type Config = {
-  swipeIcon: JSX.Element
-  fontSize?: number | string
+type IconConfig = {
+  swipeIcon?: JSX.Element
+}
+const isExplicit = (config?: IconConfig | IconProps): config is IconConfig => (config as IconConfig)?.swipeIcon !== undefined
+export type Config = (IconConfig | IconProps) & {
   durationSecs?: number
+  divProps?: Omit<MotionProps, 'animate' | 'initial'>
 }
 
-export function useSwipeAnimation({ swipeIcon, ...config}: Config): {
+export function useSwipeAnimation(config?: Config): {
   run(): Promise<void>
-  Animation: typeof motion.div
+  animation: JSX.Element
 } {
-  const durationSecs = config.durationSecs ?? 1
-  const fontSize = config.fontSize ?? '4rem'
+  const durationSecs = config?.durationSecs ?? 1
   
   const controls = useAnimation()
   const a = 10
@@ -28,13 +31,18 @@ export function useSwipeAnimation({ swipeIcon, ...config}: Config): {
     })
   }, [controls, durationSecs])
 
-  const Animation = memo((props: Omit<MotionProps, 'children'>) => (
-    <motion.div animate={controls} initial={{opacity: 0}} {...props}>
-      <span style={{fontSize}}>{swipeIcon}</span>
-    </motion.div>
-  ))
+  const swipeIcon = isExplicit(config)
+    ? config.swipeIcon
+    : <SwipeIcon svg={{ width: '4rem', height: '4rem', ...config?.svg }} path={{fill: 'white', ...config?.path}}/>
 
-  return { Animation, run }
+  const { style, ...divProps } = config?.divProps ?? {}
+  const animation = (
+    <motion.div animate={controls} initial={{opacity: 0}} style={{width: 'max-content', ...style}} {...divProps}>
+      {swipeIcon}
+    </motion.div>
+  )
+
+  return { animation, run }
 }
 
 export default useSwipeAnimation
