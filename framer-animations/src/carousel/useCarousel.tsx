@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Carousel } from "./Carousel";
 import { SwipeDirection } from "../util/swipe";
 import { mod } from "../util/mod";
@@ -19,34 +19,44 @@ export type Hook = {
 }
 export type Config = {
   swipeThreshold?: number
+  /** Whether to allow navigation between the first and last items (defaults to `true`) */
+  wrap?: boolean
 }
 
 /**
  * Self-managed draggable carousel. Returns the actual component `carousel`, plus the `selected` item and callbacks to programatically move
  */
 export function useCarousel(items: Items, config?: Config): Hook {
-  const [state, setState] = useState<{page: number, dir?: SwipeDirection, skipAnimation?: boolean}>({ page: 0 })
-  useEffect(() => console.log(state), [state])
-  const {page, dir, skipAnimation} = state
-
-  const move = useCallback((dir: SwipeDirection) => {
-    const delta = dir === 'left' ? 1 : -1
-    setState(curr => ({ page: curr.page + delta, dir, skipAnimation: false }))
-  }, [setState])
+  const wrap = config?.wrap ?? true
   
-  const goto = useCallback((newPage: number) => {
-    console.log('Goto', newPage)
-    const dir = newPage > page ? 'left' : 'right'
-    const skipAnimation = Math.abs(newPage - page) > 1
-    setState({ page: newPage, dir, skipAnimation })
-  }, [page, setState])
-
   const numItems = items.mode === 'eager'
     ? items.items.length
     : items.numItems
   const item = items.mode === 'eager'
     ? (idx: number) => items.items[idx]
     : items.item
+
+  const [state, setState] = useState<{page: number, dir?: SwipeDirection, skipAnimation?: boolean}>({ page: 0 })
+  const { page, dir, skipAnimation } = state
+
+  const move = useCallback((dir: SwipeDirection) => {
+    const delta = dir === 'left' ? 1 : -1
+    setState(curr => { 
+      const page = wrap
+        ? curr.page + delta
+        : Math.max(0, Math.min(curr.page + delta, numItems-1))
+      return {
+        page, dir, skipAnimation: false
+      }
+    })
+  }, [setState, wrap, numItems])
+  
+  const goto = useCallback((newPage: number) => {
+    const dir = newPage > page ? 'left' : 'right'
+    const skipAnimation = Math.abs(newPage - page) > 1
+    setState({ page: newPage, dir, skipAnimation })
+  }, [page, setState])
+
 
   const selected = mod(page, numItems);
   const carousel = (
