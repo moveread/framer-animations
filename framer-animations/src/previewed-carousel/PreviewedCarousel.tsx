@@ -1,5 +1,5 @@
 import React, { Key } from 'react'
-import { AnimatePresence, LayoutGroup, MotionProps, Variant, motion } from 'framer-motion'
+import { AnimatePresence, LayoutGroup, MotionProps, Variant, motion, useDragControls } from 'framer-motion'
 import { SwipeDirection, swipePower } from '../util/swipe'
 
 const states = ['enter', 'left', 'center', 'right', 'exit'] as const
@@ -54,17 +54,22 @@ export function PreviewedCarousel({ prev, curr, next, move, swipeThreshold, ...c
     layout: 'position', exit: 'exit', initial: 'enter',
   }
 
+  const dragControls = useDragControls()
+  const startDrag = e => dragControls.start(e)
+
   return (
     <LayoutGroup>
-      <motion.div layoutRoot style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <motion.div layoutRoot style={{ height: '100%', width: '100%', display: 'flex', justifyContent: 'center' }}
+        onPointerDown={startDrag}
+      >
         <AnimatePresence initial={false} mode='popLayout'>
-          <motion.div key={prev.key} {...common} animate='left' style={{ height: '100%', width: `${100*widthProportion}%` }}>
+          <motion.div key={prev.key} {...common} animate='left' style={{ height: '100%', width: `${100*widthProportion}%`, userSelect: 'none' }}>
             <motion.div key={prev.key} style={common.style} animate={{ rotateY, transformPerspective }}>
               {prev.elem}
             </motion.div>
           </motion.div>
           <motion.div key={curr.key} {...common} animate='center' style={{ height: '100%', width: `${100*(1-2*widthProportion)}%` }}
-            drag="x" dragElastic={1} dragConstraints={{ left: 0, right: 0 }}
+            drag="x" dragElastic={1} dragConstraints={{ left: 0, right: 0 }} dragControls={dragControls}
             onDragEnd={(_, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
               if (swipe < -(swipeThreshold ?? 1e4)) {
@@ -76,7 +81,7 @@ export function PreviewedCarousel({ prev, curr, next, move, swipeThreshold, ...c
           >
             {curr.elem}
           </motion.div>
-          <motion.div key={next.key} {...common} animate='right' style={{ height: '100%', width: `${100*widthProportion}%` }}>
+          <motion.div key={next.key} {...common} animate='right' style={{ height: '100%', width: `${100*widthProportion}%`, userSelect: 'none' }}>
             <motion.div key={next.key} style={common.style} animate={{ rotateY: `-${rotateY}`, transformPerspective }}>
               {next.elem}
             </motion.div>
