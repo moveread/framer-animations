@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Key } from 'react';
 import { motion, AnimatePresence, MotionProps } from "framer-motion"
 
 export type Props = MotionProps & {
   show: boolean
   opacity?: number
+  modalKey?: Key
 }
 /** Prop-controlled presence-based modal
  * - Gets unmounted when `show` is false
@@ -23,11 +24,11 @@ export type Props = MotionProps & {
  *    <Modal show={show}>...
  *    ```
  */
-export function Modal({ show, children, opacity, style, ...motionProps }: Props) {
+export function Modal({ show, modalKey, children, opacity, style, ...motionProps }: Props) {
   return (
     <AnimatePresence initial={false}>
       {show && (
-        <motion.div
+        <motion.div key={modalKey}
           initial={{ opacity: 0 }}
           animate={{ opacity: opacity ?? 0.7 }}
           exit={{ opacity: 0 }}
