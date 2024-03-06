@@ -2148,10 +2148,10 @@ focus-lock@^1.3.2:
   dependencies:
     tslib "^2.0.3"
 
-framer-animations@^1.3.14:
-  version "1.3.15"
-  resolved "https://registry.yarnpkg.com/framer-animations/-/framer-animations-1.3.15.tgz#36dfc11ca487583635fb2e20ef09ef80876965e1"
-  integrity sha512-N+R3VvQGMQUm1/tDBQvPgZiuccPCGiWj8/amNmuuXdPkAV71PC95xXEL7CCoKSVjDFn0D2wPcbJExB3dyKj5Wg==
+framer-animations@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/framer-animations/-/framer-animations-1.4.5.tgz#b535c9bd7aa9599340a77d714d64a686fa36e6a5"
+  integrity sha512-TL1MpNj541vlXfL+lxB0qKZn6OqL+i763ma65MqwiejJtoDGMtn9Pyu4rbw5wLcVy3dytFpZhBYYJ7of5RHJDA==
   dependencies:
     framer-motion "^11.0.8"
     react "^18.2.0"
