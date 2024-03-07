@@ -6,6 +6,7 @@ import Touch from './components/Touch'
 import Loader from './components/Loader'
 import PreviewedCarousel from './components/PreviewedCarousel'
 import FullSlideshow from './components/FullSlideshow'
+import ElemHighlight from './components/ElemHighlight'
 
 type TabT = {
   display: string
@@ -17,7 +18,8 @@ const tabs: TabT[] = [
   { display: 'Swipe', elem: <Swipe /> },
   { display: 'Touch', elem: <Touch /> },
   { display: 'Loader', elem: <Loader /> },
-  { display: 'Full Slideshow', elem: <FullSlideshow /> }
+  { display: 'Full Slideshow', elem: <FullSlideshow /> },
+  { display: 'Highlight', elem: <ElemHighlight /> }
 ]
 
 
