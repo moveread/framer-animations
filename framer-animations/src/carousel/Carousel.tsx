@@ -9,7 +9,6 @@ type Variant = {
 
 const variants = {
   enter: ({ dir, skipAnimation }: Variant) => {
-    console.log('Entering from', dir, 'Skip?', skipAnimation)
     return skipAnimation ? {
       x: dir === 'left' ? '100%' : '-100%',
       zIndex: 0,
@@ -19,8 +18,7 @@ const variants = {
       zIndex: 0
     }
   },
-  center: ({ dir, skipAnimation }: Variant) => {
-    console.log('Centered', dir, 'Skip?', skipAnimation)
+  center: ({ skipAnimation }: Variant) => {
     return skipAnimation ? {
       x: 0,
       scale: 1,
@@ -35,7 +33,6 @@ const variants = {
     }
   },
   exit: ({ dir, skipAnimation }: Variant) => {
-    console.log('Exiting to', dir, 'Skip?', skipAnimation)
     return skipAnimation ? {
       x: dir === 'left' ? '-100%' : '100%',
       zIndex: 0,
