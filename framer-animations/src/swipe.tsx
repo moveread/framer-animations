@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { MotionProps, motion, useAnimation } from 'framer-motion'
-import SwipeIcon, { Props as IconProps } from './util/icons/SwipeIcon';
+import SwipeIcon, { Props as IconProps } from './util/icons/SwipeIcon.js';
 
 type IconConfig = {
   swipeIcon?: JSX.Element

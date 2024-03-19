@@ -1,6 +1,6 @@
 import React, { Key } from 'react'
 import { AnimatePresence, LayoutGroup, MotionProps, Variant, motion, useDragControls } from 'framer-motion'
-import { SwipeDirection, swipePower } from '../util/swipe'
+import { SwipeDirection, swipePower } from '../util/swipe.js'
 
 const states = ['enter', 'left', 'center', 'right', 'exit'] as const
 type State = typeof states[number]

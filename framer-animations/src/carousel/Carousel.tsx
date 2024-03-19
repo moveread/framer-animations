@@ -1,6 +1,6 @@
 import React, { Key } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SwipeDirection, swipePower } from "../util/swipe";
+import { SwipeDirection, swipePower } from "../util/swipe.js";
 
 type Variant = {
   dir: SwipeDirection

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { type MotionProps } from "framer-motion";
-import { Modal } from "./Modal";
-import { useNotifiedState } from "../util/notified-state";
+import { Modal } from "./Modal.js";
+import { useNotifiedState } from "../util/notified-state.js";
 
 type Hook = {
   modal: JSX.Element

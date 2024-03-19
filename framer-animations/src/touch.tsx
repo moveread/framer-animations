@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react'
 import { useAnimation, motion, MotionProps } from 'framer-motion'
-import { delay } from './util/promises'
-import { Modal } from './modal'
-import { PointerIcon, Props as IconProps } from './util/icons/PointerIcon'
-import { useNotifiedState } from './util/notified-state'
+import { delay } from './util/promises.js'
+import { Modal } from './modal/index.js'
+import { PointerIcon, Props as IconProps } from './util/icons/PointerIcon.js'
+import { useNotifiedState } from './util/notified-state.js'
 
 type IconConfig = {
   handIcon?: JSX.Element

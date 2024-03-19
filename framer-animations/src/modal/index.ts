@@ -1,2 +1,2 @@
-export { useModal } from './use-modal'
-export { Modal } from './Modal'
+export { useModal } from './use-modal.js'
+export { Modal } from './Modal.js'

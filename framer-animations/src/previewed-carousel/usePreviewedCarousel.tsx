@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react"
-import PreviewedCarousel, { CurrentConfig, PreviewConfig } from "./PreviewedCarousel"
-import { SwipeDirection } from "../util/swipe"
-import { mod } from "../util/mod"
+import PreviewedCarousel, { CurrentConfig, PreviewConfig } from "./PreviewedCarousel.js"
+import { SwipeDirection } from "../util/swipe.js"
+import { mod } from "../util/mod.js"
 
 export type ItemProps = {
   idx: number
