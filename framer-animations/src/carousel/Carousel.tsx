@@ -1,6 +1,7 @@
 import React, { Key } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SwipeDirection, swipePower } from "../util/swipe.js";
+
+export type SwipeDirection = 'left' | 'right'
 
 type Variant = {
   dir: SwipeDirection
@@ -29,6 +30,7 @@ const variants = {
       }
     } : {
       x: 0,
+      scale: 1,
       zIndex: 1
     }
   },
@@ -79,7 +81,7 @@ export function Carousel({ move, direction, page, item, skipAnimation, swipeThre
               opacity: { duration: 0.2 }
             }}
             onDragEnd={(_, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x);
+              const swipe = Math.abs(offset.x)*velocity.x
               if (swipe < -(swipeThreshold ?? 1e4)) {
                 move?.('left')
               }

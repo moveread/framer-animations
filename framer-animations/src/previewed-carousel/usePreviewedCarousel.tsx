@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useState } from "react"
 import PreviewedCarousel, { Config } from "./PreviewedCarousel.js"
 import { SwipeDirection } from "../util/swipe.js"
 import { mod } from "../util/mod.js"
