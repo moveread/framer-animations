@@ -1,5 +1,6 @@
 import { VStack } from "@chakra-ui/react"
-import { delay, useSwipeAnimation } from "framer-animations"
+import { delay } from "@haskellian/async/promises/single/time";
+import { useSwipeAnimation } from "framer-animations"
 import { useCallback, useEffect } from "react";
 
 export function Swipe() {

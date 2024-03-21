@@ -1,5 +1,5 @@
+import { managedPromise } from '@haskellian/async/promises/single/managed.js'
 import { SetStateAction, useCallback, useEffect, useRef, useState } from 'react'
-import { managedPromise } from './promises.js'
 
 /** Exactly the same as `useState`, except `setState` returns a promise that resolves after the state is actually updated */
 export function useNotifiedState<T>(initialState: T | (() => T)): [T, (a: SetStateAction<T>) => Promise<void>] {
@@ -16,7 +16,7 @@ export function useNotifiedState<T>(initialState: T | (() => T)): [T, (a: SetSta
         updatedState.current.resolve()
       return next
     })
-    await updatedState.current.promise
+    await updatedState.current
   }, [])
 
   return [state, notifiedSetState]

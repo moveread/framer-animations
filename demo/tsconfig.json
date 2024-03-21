@@ -21,7 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "paths": {
-      // "framer-animations": ["/home/m4rs/mr-github/lib/js/ui/framer-animations/framer-animations/src"]
+      "framer-animations/previewed-carousel": ["/home/m4rs/mr-github/lib/js/ui/framer-animations/framer-animations/src/previewed-carousel"],
+      "framer-animations/slideshow": ["/home/m4rs/mr-github/lib/js/ui/framer-animations/framer-animations/src/slideshow"],
+      "framer-animations": ["/home/m4rs/mr-github/lib/js/ui/framer-animations/framer-animations/src"]
     }
   },
   "include": ["src"],

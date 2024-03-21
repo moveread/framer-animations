@@ -1,6 +1,5 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react"
-import { usePreviewedCarousel } from "framer-animations"
-import { ItemProps } from "framer-animations/dist/previewed-carousel"
+import { ItemProps, usePreviewedCarousel } from "framer-animations/previewed-carousel"
 
 function Item({ idx, selected }: ItemProps) {
   return (
@@ -12,7 +11,9 @@ function Item({ idx, selected }: ItemProps) {
 }
 
 export function PreviewedCarousel() {
-  const { carousel, move } = usePreviewedCarousel(Item, 5)
+  const { carousel, move } = usePreviewedCarousel(Item, 5, {
+    swipeThrottleMs: 100
+  })
   return (
     <VStack h='100%' w='100%' align='center' justify='center'>
       <Text>Carousel previewing the previous and last pages. Swipable and controllable</Text>

@@ -30,6 +30,7 @@
         "typescript": "^5.3.2"
     },
     "dependencies": {
+        "@haskellian/async": "^1.0.0",
         "framer-motion": "^11.0.8",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"

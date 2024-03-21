@@ -26,28 +26,32 @@ export type CurrentConfig = {
 export const defaultCurr: Required<CurrentConfig> = {
   scale: 1.2, zIndex: 1
 }
-type Props = {
+export type Config = {
+  preview?: PreviewConfig
+  current?: CurrentConfig
+  swipeThreshold?: number
+}
+export type Props = {
   prev: Item
   curr: Item
   next: Item
   move(direction: SwipeDirection): void
-  preview?: PreviewConfig,
-  current?: CurrentConfig
-  swipeThreshold?: number
+  config?: Config
 }
-export function PreviewedCarousel({ prev, curr, next, move, swipeThreshold, ...config }: Props) {
+export function PreviewedCarousel({ prev, curr, next, move, config }: Props) {
 
-  const { scale, widthProportion, rotateY, transformPerspective, zIndex } = {...defaultPreview, ...config.preview}
-  const { scale: currScale, zIndex: currZ } = {...defaultCurr, ...config.current }
-  
+  const { scale, widthProportion, rotateY, transformPerspective, zIndex } = {...defaultPreview, ...config?.preview}
+  const { scale: currScale, zIndex: currZ } = {...defaultCurr, ...config?.current }
+  const swipeThreshold = config?.swipeThreshold ?? 1e4
 
   const variants: Record<State, Variant> = {
     enter: { opacity: 0, scale: 0 },
     exit: { opacity: 0, scale: 0 },
-    left: { opacity: 1, scale, zIndex },
-    center: { opacity: 1, scale: currScale, zIndex: currZ },
-    right: { opacity: 1, scale, zIndex },
-  }
+    left: { opacity: 1, scale, zIndex, x: [0, -10], transition: { x: { repeat: Infinity, duration: 1e6 }}},
+    center: { opacity: 1, scale: currScale, zIndex: currZ, x: [0, 1], transition: { x: { repeat: Infinity, duration: 1e6 }} },
+    right: { opacity: 1, scale, zIndex, x: [0, 10], transition: { x: { repeat: Infinity, duration: 1e6 }}},
+  } // IMPORTANT: fast swiping sometimes breaks the x-translation. The whole x: [0, 10] + repeat: Inifinity 
+    //            thing forces it back to place whilst being completely unnoticeable (10px in 1e6 secs xd)
 
   const common: MotionProps = {
     style: { height: '100%' }, variants,
@@ -72,10 +76,10 @@ export function PreviewedCarousel({ prev, curr, next, move, swipeThreshold, ...c
             drag="x" dragElastic={1} dragConstraints={{ left: 0, right: 0 }} dragControls={dragControls}
             onDragEnd={(_, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
-              if (swipe < -(swipeThreshold ?? 1e4)) {
+              if (swipe < -swipeThreshold) {
                 move('left')
               }
-              else if (swipe > (swipeThreshold ?? 1e4))
+              else if (swipe > swipeThreshold)
                 move('right')
             }}
           >

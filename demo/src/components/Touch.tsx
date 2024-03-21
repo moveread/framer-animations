@@ -1,5 +1,6 @@
 import { VStack } from "@chakra-ui/react"
-import { useTouchAnimation, delay } from "framer-animations"
+import { delay } from "@haskellian/async/promises/single"
+import { useTouchAnimation } from "framer-animations"
 import { useCallback, useEffect } from "react"
 
 export function Touch() {

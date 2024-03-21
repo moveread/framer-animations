@@ -1,5 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, VStack } from '@chakra-ui/react'
-import { Direction, Slideshow } from 'framer-animations'
+import { Direction, Slideshow } from 'framer-animations/slideshow'
 import { useState } from 'react'
 import Swipe from './components/Swipe'
 import Touch from './components/Touch'
