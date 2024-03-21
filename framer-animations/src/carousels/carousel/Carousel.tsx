@@ -1,7 +1,7 @@
 import React, { Key } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { SwipeDirection } from "../types.js";
 
-export type SwipeDirection = 'left' | 'right'
 
 type Variant = {
   dir: SwipeDirection

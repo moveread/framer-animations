@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react'
 import { useAnimation, motion, MotionProps } from 'framer-motion'
-import { Modal } from './modal/index.js'
-import { PointerIcon, Props as IconProps } from './util/icons/PointerIcon.js'
-import { useNotifiedState } from './util/notified-state.js'
+import { Modal } from '../modal/index.js'
+import { PointerIcon, Props as IconProps } from '../util/icons/PointerIcon.js'
+import { useNotifiedState } from '../util/notified-state.js'
 import { delay } from '@haskellian/async/promises/single/time.js'
 
 type IconConfig = {

@@ -22,7 +22,7 @@ upload:
 # Build package into dist/, copying relevant files
 build: 
   cd {{PKG}} && \
-  (rm -dr dist || :) \
+  (rm -dr dist || :) && \
   yarn run build
   @just copy
 
@@ -31,7 +31,7 @@ copy:
   cd {{PKG}} && \
   cp package.json dist && \
   cp tsconfig.json dist && \
-  cp README.md dist && \
+  cp README.md dist
 
 # Install a package as both --dev and --peer (pseudo-analogous to python extras)
 extra PACKAGE:

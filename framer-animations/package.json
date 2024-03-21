@@ -1,6 +1,6 @@
 {
     "name": "framer-animations",
-    "version": "1.4.14",
+    "version": "1.5.0",
     "description": "Simple, programmatic `framer-motion` animations",
     "main": "dist/index.js",
     "type": "module",
@@ -31,6 +31,7 @@
     },
     "dependencies": {
         "@haskellian/async": "^1.0.0",
+        "@haskellian/mod": "^1.0.0",
         "framer-motion": "^11.0.8",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"

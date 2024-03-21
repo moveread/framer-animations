@@ -1,6 +1,6 @@
 import React, { Key } from 'react'
 import { AnimatePresence, LayoutGroup, MotionProps, Variant, motion, useDragControls } from 'framer-motion'
-import { SwipeDirection, swipePower } from '../util/swipe.js'
+import { SwipeDirection } from '../types.js'
 
 const states = ['enter', 'left', 'center', 'right', 'exit'] as const
 type State = typeof states[number]
@@ -75,7 +75,7 @@ export function PreviewedCarousel({ prev, curr, next, move, config }: Props) {
           <motion.div key={curr.key} {...common} animate='center' style={{ height: '100%', width: `${100*(1-2*widthProportion)}%` }}
             drag="x" dragElastic={1} dragConstraints={{ left: 0, right: 0 }} dragControls={dragControls}
             onDragEnd={(_, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x);
+              const swipe = Math.abs(offset.x)*velocity.x
               if (swipe < -swipeThreshold) {
                 move('left')
               }

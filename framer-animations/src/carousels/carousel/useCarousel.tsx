@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Carousel } from "./Carousel.js";
-import { SwipeDirection } from "../util/swipe.js";
-import { mod } from "../util/mod.js";
+import { SwipeDirection } from "../types.js";
+import { mod } from "@haskellian/mod";
 
 export type Items = {
   mode: 'eager'
